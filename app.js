@@ -1,7 +1,4 @@
-// Create an array to store employee objects
-const employees = [];
-
-// Employee constructor function
+// Constructor function for Employee
 function Employee(id, fullName, department, level) {
   this.id = id;
   this.fullName = fullName;
@@ -12,14 +9,24 @@ function Employee(id, fullName, department, level) {
   this.netSalary = 0;
 }
 
+// Prototype method to render employee information
+Employee.prototype.render = function () {
+  document.write(`
+    <p>Employee name: ${this.fullName}</p>
+    <p>Department: ${this.department}</p>
+    <p>Employee salary: ${this.salary}</p>
+    <br>
+  `);
+};
+
 // Method to generate a unique four-digit employee ID
-function generateEmployeeID() {
+Employee.prototype.generateEmployeeID = function () {
   const id = Math.floor(Math.random() * 9000) + 1000;
   return id;
-}
+};
 
 // Method to calculate the salary based on the employee level
-function calculateSalary(level) {
+Employee.prototype.calculateSalary = function (level) {
   let min, max;
   switch (level) {
     case "Senior":
@@ -40,45 +47,27 @@ function calculateSalary(level) {
   }
 
   const salary = Math.floor(Math.random() * (max - min + 1)) + min;
-  const netSalary = salary - (salary * 0.075); // Calculate net salary with 7.5% tax
+  const netSalary = salary - salary * 0.075; // Calculate net salary with 7.5% tax
   return { salary, netSalary };
-}
+};
 
-// Method to render employee information on the home page
-function renderEmployees() {
-  const employeeContainer = document.getElementById("employee-container");
-
-  employees.forEach((employee) => {
-    const employeeDiv = document.createElement("div");
-    employeeDiv.innerHTML = `
-      <p>Employee name: ${employee.fullName}</p>
-      <p>Employee salary: ${employee.salary}</p>
-    `;
-    employeeContainer.appendChild(employeeDiv);
-  });
-}
-
-// Create employee instances and add them to the employees array
-const employeeData = [
-  { fullName: "Ghazi Samer", department: "Administration", level: "Senior" },
-  { fullName: "Lana Ali", department: "Finance", level: "Senior" },
-  { fullName: "Tamara Ayoub", department: "Marketing", level: "Senior" },
-  { fullName: "Safi Walid", department: "Administration", level: "Mid-Senior" },
-  { fullName: "Omar Zaid", department: "Development", level: "Senior" },
-  { fullName: "Rana Saleh", department: "Development", level: "Junior" },
-  { fullName: "Hadi Ahmad", department: "Finance", level: "Mid-Senior" },
+// Create employee instances
+const employees = [
+  new Employee(
+    generateEmployeeID(),
+    "Ghazi Samer",
+    "Administration",
+    "Senior"
+  ),
+  new Employee(generateEmployeeID(), "Lana Ali", "Finance", "Senior"),
+  new Employee(generateEmployeeID(), "Tamara Ayoub", "Administration", "Senior"),
+  new Employee(generateEmployeeID(), "Safi Walid", "Development", "Mid-Senior"),
+  new Employee(generateEmployeeID(), "Rana Saleh", "Development", "Junior"),
+  new Employee(generateEmployeeID(), "Hadi Ahmad", "Finance", "Mid-Senior"),
 ];
 
-employeeData.forEach((data) => {
-  const id = generateEmployeeID();
-  const { salary, netSalary } = calculateSalary(data.level);
-
-  const employee = new Employee(id, data.fullName, data.department, data.level);
-  employee.salary = salary;
-  employee.netSalary = netSalary;
-
-  employees.push(employee);
+// Render employee information
+employees.forEach((employee) => {
+  employee.salary = calculateSalary(employee.level).salary;
+  employee.render();
 });
-
-// Call the renderEmployees method to display employee information
-renderEmployees();
