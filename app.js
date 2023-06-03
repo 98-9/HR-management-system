@@ -1,73 +1,95 @@
-// Constructor function for Employee
-function Employee(id, fullName, department, level) {
-  this.id = id;
-  this.fullName = fullName;
-  this.department = department;
-  this.level = level;
-  this.imageUrl = ""; // Add the image URL property if needed
-  this.salary = 0;
-  this.netSalary = 0;
+
+"use strict";
+var id = 999;
+//idnamber
+function generateId() {
+  return ++id;
 }
-
-// Prototype method to render employee information
-Employee.prototype.render = function () {
-  document.write(`
-    <p>Employee name: ${this.fullName}</p>
-    <p>Department: ${this.department}</p>
-    <p>Employee salary: ${this.salary}</p>
-    <br>
-  `);
-};
-
-// Method to generate a unique four-digit employee ID
-Employee.prototype.generateEmployeeID = function () {
-  const id = Math.floor(Math.random() * 9000) + 1000;
-  return id;
-};
-
-// Method to calculate the salary based on the employee level
-Employee.prototype.calculateSalary = function (level) {
+//Sallary
+function getRandomSalary(level) {
   let min, max;
+
   switch (level) {
-    case "Senior":
+    case 'Senior':
       min = 1500;
       max = 2000;
       break;
-    case "Mid-Senior":
+    case 'Mid-Senior':
       min = 1000;
       max = 1500;
       break;
-    case "Junior":
+    case 'Junior':
       min = 500;
       max = 1000;
       break;
-    default:
-      min = 0;
-      max = 0;
   }
 
-  const salary = Math.floor(Math.random() * (max - min + 1)) + min;
-  const netSalary = salary - salary * 0.075; // Calculate net salary with 7.5% tax
-  return { salary, netSalary };
+  return getRandomInt(min, max);
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  let salary = Math.floor(Math.random() * (max - min) + min);
+  return calculateNetSalary(salary);
+}
+
+// (min*max) salary-(salary*7.5%):
+function calculateNetSalary(salary) {
+  const taxPercent = 7.5;
+  const taxAmount = (salary * taxPercent) / 100;
+  const netSalary = salary - taxAmount;
+  return Math.round(netSalary);
+}
+
+// constructor function
+function Employee(employeeId, fullName, department, level, salary ) {
+  this.employeeId = generateId();
+  this.fullName = fullName;
+  this.department = department;
+  this.level = level;
+  this.salary = getRandomSalary(level);
+}
+
+let Ghazi = new Employee(generateId(), 'Ghazi Samer', "Administration", "Senior", getRandomSalary("Senior"));
+let Lana = new Employee(generateId(), 'Lana Ali', "Finance", "Senior", getRandomSalary("Senior"));
+let Tamara = new Employee(generateId(), 'Tamara Ayoub', "Marketing", "Senior", getRandomSalary("Senior"));
+let Safi = new Employee(generateId(), 'Safi Walid', "Administration", "Mid-Senior", getRandomSalary("Mid-Senior"));
+let Omar = new Employee(generateId(), 'Omar Zaid', "Development", "Senior", getRandomSalary("Senior"));
+let Rana = new Employee(generateId(), 'Rana Saleh', "Development", "Junior", getRandomSalary("Junior"));
+let Hadi = new Employee(generateId(), 'Hadi Ahmad', "Finance", "Mid-Senior", getRandomSalary("Mid-Senior"));
+
+console.table(Ghazi);
+console.table(Lana);
+console.table(Tamara);
+console.table(Safi);
+console.table(Omar);
+console.table(Rana);
+console.table(Hadi);
+
+
+//properties method
+const mainEl = document.getElementsByTagName("main");
+
+// Employee.prototype.render = function () {
+//     const divParentEl = document.createElement("div")
+//     divParentEl.className = "card"
+//     mainEl[0].appendChild(divParentEl)
+
+//     const divEl = document.createElement("div")
+//     divEl.className = "imgURL"
+//     divParentEl.appendChild(divEl)}
+
+
+//Employee prototype
+Employee.prototype.render = function () {
+
+  document.write(`<p><label>ID:</label><span class="idNumber" id="idNumber">${this.employeeId}</span></p>`);
+  document.write(`<p><label>Full Name:</label><span class="fullName" id="fullName">${this.fullName}</span></p>`);
+  document.write(`<p><label>Department:</label><span class="department" id="department">${this.Department}</span></p>`);
+  document.write(`<p><label>Level:</label><span class="level" id="level">${this.Level}</span></p>`);
+  document.write(`<p><label>Salary:</label><span class="salary" id="salary">${this.Salary}</span></p>`);
 };
 
-// Create employee instances
-const employees = [
-  new Employee(
-    generateEmployeeID(),
-    "Ghazi Samer",
-    "Administration",
-    "Senior"
-  ),
-  new Employee(generateEmployeeID(), "Lana Ali", "Finance", "Senior"),
-  new Employee(generateEmployeeID(), "Tamara Ayoub", "Administration", "Senior"),
-  new Employee(generateEmployeeID(), "Safi Walid", "Development", "Mid-Senior"),
-  new Employee(generateEmployeeID(), "Rana Saleh", "Development", "Junior"),
-  new Employee(generateEmployeeID(), "Hadi Ahmad", "Finance", "Mid-Senior"),
-];
 
-// Render employee information
-employees.forEach((employee) => {
-  employee.salary = calculateSalary(employee.level).salary;
-  employee.render();
-});
