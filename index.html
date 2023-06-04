@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" herf="./index.css" />
 </head>
+    <title>HR-management-system</title>
+    <!-- <link rel="js file" href="app.js"> -->
+</head>
+
 <body>
     <Header>
-        <H1>Welcome to Home Page</H1>
-<nav>
-    <link rel="Accounting Page" href="accounting.html">
-    <link rel="Home Page" href="index.html">
-</nav>
+        <H1>Welcome to HR-management-system Home Page</H1>
+        <nav>
+            <link rel="Accounting Page" href="accounting.html">
+            <link rel="Home Page" href="index.html">
+        </nav>
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./accounting.html">Accounting</a></li>
+            </ul>
+        </nav>
     </Header>
 
     <Main>
-        <div id="employee-container"></div>
-    </Main>
-
-    <Footer>
-        <div>
-            class="social media links"
-            <a href="Facebook">https://www.facebook.com/</a>
+        <div id="employee-container" class="card-container"></div>
+        <div class="main-content">
+            <div id="employee-list"></div>
         </div>
-<div>class= "copyright"</div>
-&copy;2023 HR Managment System. All rights reserved.
-    </Footer>
+        <main class="main-content"> -->
 
-    <script src="app.js"></script>
+               <!-- Employee Card -->
+    <div class="employee-card" id="card">
+      </div>
+     </main>
+
+        <Footer>
+
+            <div class= "copyright" >
+                &copy;2023 HR Managment System - LUMA - All rights reserved.</div>
+            <div class="social-icons">
+                <a href="./index.html"><i class="fab fa-facebook"></i></a>
+                <a href="./index.html"><i class="fab fa-twitter"></i></a>
+                <a href="./index.html"><i class="fab fa-instagram"></i></a>
+            </div>
+        </Footer>
+
+        <script src="app2.js"></script>
 </body>
+
 </html>
